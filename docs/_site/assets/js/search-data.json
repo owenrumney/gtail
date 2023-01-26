@@ -1,0 +1,116 @@
+{"0": {
+    "doc": "Cloud Build",
+    "title": "Cloud Build",
+    "content": "gtail allows you to tail logs from Google Cloud Build both as streams or historic logs. ",
+    "url": "/cloudbuild",
+    "relUrl": "/cloudbuild"
+  },"1": {
+    "doc": "Cloud Build",
+    "title": "Cloud Build Command",
+    "content": "gtail cloud-build -h . Tail logs for a CloudBuild Job Usage: gtail cloud-build [flags] gtail cloud-build [command] Aliases: cloud-build, cb Available Commands: historic Get the cloud build logs for a trigger that has already completed Flags: --build-id string The cloud build ID -h, --help help for cloud-build -o, --output string The output format either json or a template string --severity strings The severity of logs to include --trigger-name string The name of the cloud build trigger to use Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") Use \"gtail cloud-build [command] --help\" for more information about a command. ",
+    "url": "/cloudbuild#cloud-build-command",
+    "relUrl": "/cloudbuild#cloud-build-command"
+  },"2": {
+    "doc": "Cloud Run",
+    "title": "Cloud Run",
+    "content": "gtail allows you to tail logs from Google Cloud Run both as streams or historic logs. ",
+    "url": "/cloudrun",
+    "relUrl": "/cloudrun"
+  },"3": {
+    "doc": "Cloud Run",
+    "title": "Cloud Run Command",
+    "content": "gtail cloud-run -h . Tail logs for a Cloud Run revision Usage: gtail cloud-run [flags] gtail cloud-run [command] Aliases: cloud-run, cr Available Commands: historic Get the cloud run logs for a revision that has already exited Flags: -h, --help help for cloud-run -o, --output string The output format either json or a template string --revision-id string The cloud run revision ID --service string Cloud Run service for the logs to get --severity strings The severity of logs to include Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") Use \"gtail cloud-run [command] --help\" for more information about a command. ",
+    "url": "/cloudrun#cloud-run-command",
+    "relUrl": "/cloudrun#cloud-run-command"
+  },"4": {
+    "doc": "Global Arguments",
+    "title": "Global Arguments",
+    "content": "There are a number of global arguments that can be used with any command. ",
+    "url": "/global/",
+    "relUrl": "/global/"
+  },"5": {
+    "doc": "Global Arguments",
+    "title": "--project or -p",
+    "content": "This is the GCP project ID to use. If not specified, the project ID will be inferred from the current GCP project. Alternatively, it can be set using the GCP_CLOUD_PROJECT environment variable. ",
+    "url": "/global/#--project-or--p",
+    "relUrl": "/global/#--project-or--p"
+  },"6": {
+    "doc": "Global Arguments",
+    "title": "--region or -r",
+    "content": "This is the GCP region to use. If not specified, the region will be inferred from the current GCP project. This is defaulted to us-central1. ",
+    "url": "/global/#--region-or--r",
+    "relUrl": "/global/#--region-or--r"
+  },"7": {
+    "doc": "Global Arguments",
+    "title": "--debug or -d",
+    "content": "This enables debug logging. This is useful for debugging issues with gtail as it will give you information about what log queries are being used. ",
+    "url": "/global/#--debug-or--d",
+    "relUrl": "/global/#--debug-or--d"
+  },"8": {
+    "doc": "Historic Cloud Build",
+    "title": "Historic Cloud Build",
+    "content": "gtail can get historic logs for a Cloud Build that has already completed . gtail cloud-build historic -h . Get the cloud build logs for a trigger that has already completed Usage: gtail cloud-build historic [flags] Flags: -h, --help help for historic --hours-ago int Roughly how many hours ago the build happened. Searches a window of time from then till now (default 24) Global Flags: --build-id string The cloud build ID -d, --debug Enable debug logging -o, --output string The output format either json or a template string -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") --severity strings The severity of logs to include --trigger-name string The name of the cloud build trigger to use . The --hours-ago flag will search for a build that started within the last n hours. If you don’t specify this flag it will search for a build that started within the last 24 hours. | Note: starting a historic build with the --trigger-name flag will tail all builds for that trigger in the given time period. | . ",
+    "url": "/cloudbuild/historic/",
+    "relUrl": "/cloudbuild/historic/"
+  },"9": {
+    "doc": "Historic Cloud Run",
+    "title": "Historic Cloud Run",
+    "content": "gtail can get historic logs for a Cloud Run that has already completed . gtail cloud-run historic -h . Get the cloud run logs for a revision that has already exited Usage: gtail cloud-run historic [flags] Flags: -h, --help help for historic --hours-ago int Roughly how many hours ago the log happened. Searches a window of time from then till now (default 24) Global Flags: -d, --debug Enable debug logging -o, --output string The output format either json or a template string -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") --revision-id string The cloud run revision ID --service string Cloud Run service for the logs to get --severity strings The severity of logs to include . You need to pass a --revision-id or --service flag to get the logs for a specific revision or service. The --hours-ago flag will search for a build that started within the last n hours. If you don’t specify this flag it will search for a build that started within the last 24 hours. | Note: if you do a historic build with the --service flag it will tail everything in the period and you may hit the rate limit if it is a particularly busy service | . ",
+    "url": "/cloudrun/historic/",
+    "relUrl": "/cloudrun/historic/"
+  },"10": {
+    "doc": "Home",
+    "title": "Home",
+    "content": "This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details. If [Jekyll] is installed on your computer, you can also build and preview the created site *locally*. This lets you test changes before committing them, and avoids waiting for GitHub Pages.[^1] And you will be able to deploy your local build to a different platform than GitHub Pages. More specifically, the created site: - uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem - uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages Other than that, you're free to customize sites that you create with this template, however you like. You can easily change the versions of `just-the-docs` and Jekyll it uses, as well as adding further plugins. [Browse our documentation][Just the Docs] to learn more about how to use this theme. To get started with creating a site, just click \"[use this template]\"! ---- [^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site). [Just the Docs]: https://just-the-docs.github.io/just-the-docs/ [GitHub Pages]: https://docs.github.com/en/pages [README]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md [Jekyll]: https://jekyllrb.com [GitHub Pages / Actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/ [use this template]: https://github.com/just-the-docs/just-the-docs-template/generate ",
+    "url": "/",
+    "relUrl": "/"
+  },"11": {
+    "doc": "Output",
+    "title": "Output",
+    "content": "Most commands in gtail support outputting the logs in a number of different formats. This is done using the --output flag. ",
+    "url": "/output/",
+    "relUrl": "/output/"
+  },"12": {
+    "doc": "Output",
+    "title": "json",
+    "content": "If you use --output json you will get your results in json format. This is useful for seeing what is actually in the message. ",
+    "url": "/output/#json",
+    "relUrl": "/output/#json"
+  },"13": {
+    "doc": "Output",
+    "title": "Template Strings",
+    "content": "You can use a template string to format the output of gtail. Doing so assumes an understanding of the structure of the messages that are being returned and a knowledge of the Go text/template package. An example might be . gtail cloud-build historic -p my-project --trigger-name my-trigger-build --output ' - ' . Which would give you something fairly unhelpful like below, where every line is the same; . INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something that happened INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something else that happened INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something you might need to know about INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something else INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a A few empty lines then another thing that's interesting . ",
+    "url": "/output/#template-strings",
+    "relUrl": "/output/#template-strings"
+  },"14": {
+    "doc": "PubSub",
+    "title": "PubSub Topic",
+    "content": "gtail will create a temporary subscription for a topic. :warning: This is a temporary subscription and will be deleted when gtail exits and you need permissions to create subscriptions . $ gtail pubsub . You must specify a project ID using the -p flag or GCP_PROJECT_ID envvar. Usage: gtail pubsub [flags] Aliases: pubsub, ps Flags: -h, --help help for pubsub -o, --output string The output format json or a template string --tail-duration string The duration to tail for (default \"10m\") -t, --topic string The pubsub topic to tail Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") . The subscription that will be created by gtail will be named gtail-&lt;topic&gt;-&lt;number&gt; and will be deleted when gtail exits. The number is just the Unix ticks. If you Ctrl-C gtail it will delete the subscription. If you kill -9 gtail it will not delete the subscription and you will need to clean up. ",
+    "url": "/pubsub#pubsub-topic",
+    "relUrl": "/pubsub#pubsub-topic"
+  },"15": {
+    "doc": "PubSub",
+    "title": "Tail PubSub Topic for a Duration",
+    "content": "$ gtail pubsub -p my-project -t my-topic --tail-duration 1h . When passing a --tail-duration gtail will create a subscription and then delete it when the duration has passed. You can use sensible durations like 1h or 10m or 1h30m or 1h30m10s. ",
+    "url": "/pubsub#tail-pubsub-topic-for-a-duration",
+    "relUrl": "/pubsub#tail-pubsub-topic-for-a-duration"
+  },"16": {
+    "doc": "PubSub",
+    "title": "PubSub",
+    "content": " ",
+    "url": "/pubsub",
+    "relUrl": "/pubsub"
+  },"17": {
+    "doc": "Streaming Cloud Build",
+    "title": "Streaming Cloud Build",
+    "content": "gtail can start streaming a build based on the ID or the trigger name. gtail cloud-build -h . Tail logs for a CloudBuild Job Usage: gtail cloud-build [flags] gtail cloud-build [command] Aliases: cloud-build, cb Available Commands: historic Get the cloud build logs for a trigger that has already completed Flags: --build-id string The cloud build ID -h, --help help for cloud-build -o, --output string The output format either json or a template string --severity strings The severity of logs to include --trigger-name string The name of the cloud build trigger to use Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") Use \"gtail cloud-build [command] --help\" for more information about a command. Passing the --build-id flag will start streaming the logs for that build or you can use --trigger-name to specify a trigger and start streaming that. ",
+    "url": "/cloudrun/stream/",
+    "relUrl": "/cloudrun/stream/"
+  },"18": {
+    "doc": "Streaming Cloud Build",
+    "title": "Streaming Cloud Build",
+    "content": "gtail can start streaming a run based on the revision-id or the service name. If you’re tailing the logs as a stream, it’s best to use the service flag. gtail cloud-run -h . Tail logs for a Cloud Run revision Usage: gtail cloud-run [flags] gtail cloud-run [command] Aliases: cloud-run, cr Available Commands: historic Get the cloud run logs for a revision that has already exited Flags: -h, --help help for cloud-run -o, --output string The output format either json or a template string --revision-id string The cloud run revision ID --service string Cloud Run service for the logs to get --severity strings The severity of logs to include Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") Use \"gtail cloud-run [command] --help\" for more information about a command. Passing the --build-id flag will start streaming the logs for that build or you can use --trigger-name to specify a trigger and start streaming that. ",
+    "url": "/cloudbuild/stream/",
+    "relUrl": "/cloudbuild/stream/"
+  }
+}

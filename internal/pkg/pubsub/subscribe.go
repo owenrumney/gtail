@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/pubsub"
+	"github.com/owenrumney/gtail/internal/pkg/auth"
 	"github.com/owenrumney/gtail/pkg/logger"
 )
 
@@ -24,6 +25,7 @@ func (t *PubSub) createSubscription(subscriptionName, topicName, pushEndpoint st
 	subscription := t.client.Subscription(subscriptionName)
 	exists, err := subscription.Exists(t.ctx)
 	if err != nil {
+		auth.CheckErrorForAuth(err)
 		logger.Error("Error checking if subscription exists: %v", err)
 	}
 	if exists {
@@ -56,6 +58,7 @@ func (t *PubSub) deleteSubscription(subscriptionName string) error {
 	subscription := t.client.Subscription(subscriptionName)
 	exists, err := subscription.Exists(t.ctx)
 	if err != nil {
+		auth.CheckErrorForAuth(err)
 		logger.Error("Error checking if subscription exists: %v", err)
 	}
 	if !exists {
