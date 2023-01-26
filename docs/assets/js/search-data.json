@@ -65,48 +65,54 @@
     "url": "/",
     "relUrl": "/"
   },"11": {
+    "doc": "Installation",
+    "title": "Installation",
+    "content": "From source . go install github.com/owenrumney/gtail/cmd/gtail@latest . Alternatively, download the latest release from the releases page . ",
+    "url": "/installation/",
+    "relUrl": "/installation/"
+  },"12": {
     "doc": "Output",
     "title": "Output",
     "content": "Most commands in gtail support outputting the logs in a number of different formats. This is done using the --output flag. ",
     "url": "/output/",
     "relUrl": "/output/"
-  },"12": {
+  },"13": {
     "doc": "Output",
     "title": "json",
     "content": "If you use --output json you will get your results in json format. This is useful for seeing what is actually in the message. ",
     "url": "/output/#json",
     "relUrl": "/output/#json"
-  },"13": {
+  },"14": {
     "doc": "Output",
     "title": "Template Strings",
     "content": "You can use a template string to format the output of gtail. Doing so assumes an understanding of the structure of the messages that are being returned and a knowledge of the Go text/template package. An example might be . gtail cloud-build historic -p my-project --trigger-name my-trigger-build --output ' - ' . Which would give you something fairly unhelpful like below, where every line is the same; . INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something that happened INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something else that happened INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something you might need to know about INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a Something else INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a INFO - 7f3b0b1a-1b8a-4b0f-8b1a-1b8a4b0f8b1a A few empty lines then another thing that's interesting . ",
     "url": "/output/#template-strings",
     "relUrl": "/output/#template-strings"
-  },"14": {
+  },"15": {
     "doc": "PubSub",
     "title": "PubSub Topic",
     "content": "gtail will create a temporary subscription for a topic. :warning: This is a temporary subscription and will be deleted when gtail exits and you need permissions to create subscriptions . $ gtail pubsub . You must specify a project ID using the -p flag or GCP_PROJECT_ID envvar. Usage: gtail pubsub [flags] Aliases: pubsub, ps Flags: -h, --help help for pubsub -o, --output string The output format json or a template string --tail-duration string The duration to tail for (default \"10m\") -t, --topic string The pubsub topic to tail Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") . The subscription that will be created by gtail will be named gtail-&lt;topic&gt;-&lt;number&gt; and will be deleted when gtail exits. The number is just the Unix ticks. If you Ctrl-C gtail it will delete the subscription. If you kill -9 gtail it will not delete the subscription and you will need to clean up. ",
     "url": "/pubsub#pubsub-topic",
     "relUrl": "/pubsub#pubsub-topic"
-  },"15": {
+  },"16": {
     "doc": "PubSub",
     "title": "Tail PubSub Topic for a Duration",
     "content": "$ gtail pubsub -p my-project -t my-topic --tail-duration 1h . When passing a --tail-duration gtail will create a subscription and then delete it when the duration has passed. You can use sensible durations like 1h or 10m or 1h30m or 1h30m10s. ",
     "url": "/pubsub#tail-pubsub-topic-for-a-duration",
     "relUrl": "/pubsub#tail-pubsub-topic-for-a-duration"
-  },"16": {
+  },"17": {
     "doc": "PubSub",
     "title": "PubSub",
     "content": " ",
     "url": "/pubsub",
     "relUrl": "/pubsub"
-  },"17": {
+  },"18": {
     "doc": "Streaming Cloud Build",
     "title": "Streaming Cloud Build",
     "content": "gtail can start streaming a build based on the ID or the trigger name. gtail cloud-build -h . Tail logs for a CloudBuild Job Usage: gtail cloud-build [flags] gtail cloud-build [command] Aliases: cloud-build, cb Available Commands: historic Get the cloud build logs for a trigger that has already completed Flags: --build-id string The cloud build ID -h, --help help for cloud-build -o, --output string The output format either json or a template string --severity strings The severity of logs to include --trigger-name string The name of the cloud build trigger to use Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") Use \"gtail cloud-build [command] --help\" for more information about a command. Passing the --build-id flag will start streaming the logs for that build or you can use --trigger-name to specify a trigger and start streaming that. ",
     "url": "/cloudrun/stream/",
     "relUrl": "/cloudrun/stream/"
-  },"18": {
+  },"19": {
     "doc": "Streaming Cloud Build",
     "title": "Streaming Cloud Build",
     "content": "gtail can start streaming a run based on the revision-id or the service name. If you’re tailing the logs as a stream, it’s best to use the service flag. gtail cloud-run -h . Tail logs for a Cloud Run revision Usage: gtail cloud-run [flags] gtail cloud-run [command] Aliases: cloud-run, cr Available Commands: historic Get the cloud run logs for a revision that has already exited Flags: -h, --help help for cloud-run -o, --output string The output format either json or a template string --revision-id string The cloud run revision ID --service string Cloud Run service for the logs to get --severity strings The severity of logs to include Global Flags: -d, --debug Enable debug logging -p, --project string The GCP project ID -r, --region string The GCP region (default \"us-central1\") Use \"gtail cloud-run [command] --help\" for more information about a command. Passing the --build-id flag will start streaming the logs for that build or you can use --trigger-name to specify a trigger and start streaming that. ",

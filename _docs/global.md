@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Global Arguments
-nav_order: 5
+nav_order: 2
 ---
 
 # Global Arguments
