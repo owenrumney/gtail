@@ -45,5 +45,5 @@ Global Flags:
 Use "gtail cloud-run [command] --help" for more information about a command.
 ```
 
-Passing the `--build-id` flag will start streaming the logs for that build or you can use `--trigger-name` to specify a trigger and start streaming that.
+Passing the `--revision-d` flag will start streaming the logs for that revision or you can use `--service` to specify a service and start streaming the latest from that.
 
