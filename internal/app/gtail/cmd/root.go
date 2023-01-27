@@ -17,7 +17,7 @@ var rootCmd = &cobra.Command{
 			return nil
 		}
 
-		if projectID == "" {
+		if projectID == "" && os.Getenv("GCP_PROJECT_ID") == "" {
 			fmt.Print("\nYou must specify a project ID using the -p flag or GCP_PROJECT_ID envvar.\n\n")
 			_ = cmd.Usage()
 			os.Exit(0)
@@ -33,7 +33,7 @@ func GetRootCmd() *cobra.Command {
 	rootCmd.SilenceUsage = true
 
 	rootCmd.AddCommand(getCloudBuildCommand(), getCloudRunCommand(), getPubSubCommand())
-	rootCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "The GCP project ID")
+	rootCmd.PersistentFlags().StringVarP(&projectID, "project", "p", projectID, "The GCP project ID")
 	rootCmd.PersistentFlags().StringVarP(&region, "region", "r", region, "The GCP region")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug logging")
 

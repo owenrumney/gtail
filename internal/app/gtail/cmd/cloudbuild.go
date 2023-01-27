@@ -5,8 +5,10 @@ import (
 	"strings"
 
 	"cloud.google.com/go/logging"
+	"cloud.google.com/go/logging/apiv2/loggingpb"
 	"github.com/owenrumney/gtail/internal/pkg/logfilter"
 	"github.com/owenrumney/gtail/internal/pkg/logs"
+	"github.com/owenrumney/gtail/pkg/logger"
 	"github.com/owenrumney/gtail/pkg/output"
 	"github.com/spf13/cobra"
 )
@@ -57,6 +59,22 @@ func getCloudBuildCommand() *cobra.Command {
 
 func defaultCloudBuildLogWriter(value interface{}) error {
 	switch t := value.(type) {
+
+	case *loggingpb.LogEntry:
+		var content string
+		switch payload := t.Payload.(type) {
+
+		case *loggingpb.LogEntry_TextPayload:
+			content = payload.TextPayload
+		case *loggingpb.LogEntry_ProtoPayload:
+			content = fmt.Sprintf("%v", payload.ProtoPayload)
+		case *loggingpb.LogEntry_JsonPayload:
+			content = fmt.Sprintf("%v", payload.JsonPayload)
+		}
+		if step, ok := t.Labels["build_step"]; ok {
+			content = strings.TrimPrefix(strings.TrimPrefix(content, step), ": ")
+		}
+		fmt.Printf("%v\n", content)
 	case *logging.Entry:
 		content := t.Payload.(string)
 		if step, ok := t.Labels["build_step"]; ok {
@@ -64,6 +82,7 @@ func defaultCloudBuildLogWriter(value interface{}) error {
 		}
 		fmt.Printf("%v\n", content)
 	default:
+		logger.Debug("Got a default type: %v", t)
 		fmt.Printf("%v\n", value)
 	}
 	return nil

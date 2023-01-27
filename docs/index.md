@@ -9,6 +9,6 @@ similar to `tail` command but specifically for GCP services.
 
 At present, the only services that are supported are;
 
-* [Cloud Run](/cloudrun)
 * [Cloud Build](/cloudbuild)
+* [Cloud Run](/cloudrun)
 * [Pub/Sub](/pubsub)
