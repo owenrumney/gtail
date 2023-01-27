@@ -1,44 +1,48 @@
 ---
 layout: default
-title: Streaming Cloud Build
+title: Streaming Cloud Run
 parent: Cloud Run
 nav_order: 5
 ---
 
-# Streaming Cloud Build
+# Streaming Cloud Run
 {: .no_toc }
 
-gtail can start streaming a build based on the ID or the trigger name.
+{: .no_toc }
+
+gtail can start streaming a run based on the `revision-id` or the `service` name.
+
+If you're tailing the logs as a stream, it's best to use the `service` flag.
 
 ```bash
-gtail cloud-build -h
+gtail cloud-run -h
 ```
 ```text
-Tail logs for a CloudBuild Job
+Tail logs for a Cloud Run revision
 
 Usage:
-  gtail cloud-build [flags]
-  gtail cloud-build [command]
+  gtail cloud-run [flags]
+  gtail cloud-run [command]
 
 Aliases:
-  cloud-build, cb
+  cloud-run, cr
 
 Available Commands:
-  historic    Get the cloud build logs for a trigger that has already completed
+  historic    Get the cloud run logs for a revision that has already exited
 
 Flags:
-      --build-id string       The cloud build ID
-  -h, --help                  help for cloud-build
-  -o, --output string         The output format either json or a template string
-      --severity strings      The severity of logs to include
-      --trigger-name string   The name of the cloud build trigger to use
+  -h, --help                 help for cloud-run
+  -o, --output string        The output format either json or a template string
+      --revision-id string   The cloud run revision ID
+      --service string       Cloud Run service for the logs to get
+      --severity strings     The severity of logs to include
 
 Global Flags:
   -d, --debug            Enable debug logging
   -p, --project string   The GCP project ID
   -r, --region string    The GCP region (default "us-central1")
 
-Use "gtail cloud-build [command] --help" for more information about a command.
+Use "gtail cloud-run [command] --help" for more information about a command.
 ```
 
 Passing the `--build-id` flag will start streaming the logs for that build or you can use `--trigger-name` to specify a trigger and start streaming that.
