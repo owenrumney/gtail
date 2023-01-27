@@ -36,6 +36,7 @@ func (o *output) Write(value interface{}) error {
 	logger.Debug("Output: %v", value)
 	if o.templateString == "" {
 		if o.defaultFormatFunc != nil {
+			logger.Debug("Using default format function")
 			return o.defaultFormatFunc(value)
 		}
 		fmt.Printf("%v\n", value)

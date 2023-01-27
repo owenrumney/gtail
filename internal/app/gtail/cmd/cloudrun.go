@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"cloud.google.com/go/logging"
+	"cloud.google.com/go/logging/apiv2/loggingpb"
 	"github.com/owenrumney/gtail/internal/pkg/logfilter"
 	"github.com/owenrumney/gtail/internal/pkg/logs"
 	"github.com/owenrumney/gtail/pkg/output"
@@ -58,7 +59,18 @@ func defaultCloudRunLogWriter(value interface{}) error {
 		if content, ok := t.Payload.(string); ok {
 			fmt.Printf("%v\n", content)
 		}
+	case *loggingpb.LogEntry:
+		var content string
+		switch payload := t.Payload.(type) {
 
+		case *loggingpb.LogEntry_TextPayload:
+			content = payload.TextPayload
+		case *loggingpb.LogEntry_ProtoPayload:
+			content = fmt.Sprintf("%v", payload.ProtoPayload)
+		case *loggingpb.LogEntry_JsonPayload:
+			content = fmt.Sprintf("%v", payload.JsonPayload)
+		}
+		fmt.Printf("%v\n", content)
 	default:
 		fmt.Printf("%v\n", value)
 	}

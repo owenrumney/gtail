@@ -10,6 +10,7 @@ import (
 	"cloud.google.com/go/logging/apiv2/loggingpb"
 	"github.com/owenrumney/gtail/internal/pkg/auth"
 	"github.com/owenrumney/gtail/internal/pkg/logfilter"
+	"github.com/owenrumney/gtail/pkg/logger"
 )
 
 func (la *LogAccess) StreamLogEntries(logFilter *logfilter.LogFilter) error {
@@ -38,29 +39,29 @@ func (la *LogAccess) StreamLogEntries(logFilter *logfilter.LogFilter) error {
 	}
 
 	// read and print two or more streamed log entries
-	for counter := 0; counter < 2; {
+	for {
 		resp, err := stream.Recv()
 		if err == io.EOF {
+			logger.Debug("stream.Recv EOF")
 			break
 		}
 		if err != nil {
 			return fmt.Errorf("stream.Recv error: %v", err)
 		}
 		if resp.Entries != nil {
-			counter += len(resp.Entries)
 			for _, entry := range resp.Entries {
 				if len(la.interestedSeverities) > 0 {
 					for _, s := range la.interestedSeverities {
 						if strings.EqualFold(entry.Severity.String(), s) {
 							if err := la.Write(entry); err != nil {
-								return err
+								logger.Error("error writing the log entry %v", err)
 							}
 							break
 						}
 					}
 				} else {
 					if err := la.Write(entry); err != nil {
-						return err
+						logger.Error("error writing the log entry %v", err)
 					}
 				}
 			}
