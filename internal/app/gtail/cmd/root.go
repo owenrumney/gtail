@@ -32,7 +32,13 @@ func GetRootCmd() *cobra.Command {
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.SilenceUsage = true
 
-	rootCmd.AddCommand(getCloudBuildCommand(), getCloudRunCommand(), getPubSubCommand())
+	rootCmd.AddCommand(
+		getCloudBuildCommand(),
+		getCloudRunCommand(),
+		getCloudFunctionCommand(),
+		getPubSubCommand(),
+		getK8sCommand(),
+	)
 	rootCmd.PersistentFlags().StringVarP(&projectID, "project", "p", projectID, "The GCP project ID")
 	rootCmd.PersistentFlags().StringVarP(&region, "region", "r", region, "The GCP region")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug logging")

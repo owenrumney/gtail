@@ -16,7 +16,7 @@ import (
 var cloudBuild = &cobra.Command{
 	Use:     "cloud-build",
 	Aliases: []string{"cb"},
-	Short:   "Tail logs for a CloudBuild Job",
+	Short:   "Tail logs for a Cloud Build Job",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		outputWriter := output.New(outputFormat, severities, defaultCloudBuildLogWriter)
 		la := logs.New(projectID, severities, outputWriter)
@@ -30,7 +30,7 @@ var cloudBuild = &cobra.Command{
 
 var historicCloudBuildCmd = &cobra.Command{
 	Use:   "historic",
-	Short: "Get the cloud build logs for a trigger that has already completed",
+	Short: "Get the Cloud Build logs for a trigger that has already completed",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		outputWriter := output.New(outputFormat, severities, defaultCloudBuildLogWriter)
 		la := logs.New(projectID, severities, outputWriter)

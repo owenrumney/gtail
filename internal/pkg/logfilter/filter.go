@@ -11,8 +11,10 @@ import (
 type LogFilterType string
 
 const (
-	CloudBuildLogFilterType LogFilterType = "build"
-	CloudRunLogFilterType   LogFilterType = "run"
+	CloudBuildLogFilterType    LogFilterType = "build"
+	CloudRunLogFilterType      LogFilterType = "run"
+	CloudFunctionLogFilterType LogFilterType = "function"
+	K8sClusterLogFilterType    LogFilterType = "k8s_cluster"
 )
 
 type LogFilter struct {
@@ -22,7 +24,9 @@ type LogFilter struct {
 	hoursAgo         int
 	logID            string
 	buildTriggerName string
+	functionName     string
 	serviceName      string
+	clusterName      string
 	region           string
 }
 
@@ -34,7 +38,9 @@ func New(projectID string, filterType LogFilterType) *LogFilter {
 		hoursAgo:         24,
 		logID:            "",
 		buildTriggerName: "",
+		functionName:     "",
 		serviceName:      "",
+		clusterName:      "",
 		region:           "us-central1",
 	}
 }
@@ -59,8 +65,18 @@ func (lf *LogFilter) WithBuildTriggerName(buildTriggerName string) *LogFilter {
 	return lf
 }
 
+func (lf *LogFilter) WithFunctionName(functionName string) *LogFilter {
+	lf.functionName = functionName
+	return lf
+}
+
 func (lf *LogFilter) WithServiceName(serviceName string) *LogFilter {
 	lf.serviceName = serviceName
+	return lf
+}
+
+func (lf *LogFilter) WithClusterName(clusterName string) *LogFilter {
+	lf.clusterName = clusterName
 	return lf
 }
 
@@ -82,12 +98,20 @@ func (lf *LogFilter) GetFilterString() string {
 	case CloudRunLogFilterType:
 		filters = append(filters, fmt.Sprintf(`log_name: "projects/%s/logs/run.googleapis.com"`, lf.projectID))
 		filters = append(filters, `resource.type="cloud_run_revision"`)
-		if lf.region != "" {
-			filters = append(filters, fmt.Sprintf(`resource.labels.location="%s"`, lf.region))
-		}
 		if lf.logID != "" {
 			filters = append(filters, fmt.Sprintf(`resource.labels.revision_name="%s"`, lf.logID))
 		}
+	case CloudFunctionLogFilterType:
+		filters = append(filters, `resource.type="cloud_function"`)
+		if lf.logID != "" {
+			filters = append(filters, fmt.Sprintf(`resource.labels.execution_id="%s"`, lf.logID))
+		}
+	case K8sClusterLogFilterType:
+		filters = append(filters, `resource.type="k8s_cluster"`, fmt.Sprintf(`resource.labels.project_id="%s"`, lf.projectID))
+	}
+
+	if lf.region != "" {
+		filters = append(filters, fmt.Sprintf(`resource.labels.location="%s"`, lf.region))
 	}
 
 	if lf.historic {
@@ -97,17 +121,17 @@ func (lf *LogFilter) GetFilterString() string {
 		filters = append(filters, fmt.Sprintf(`timestamp>="%s"`, start.Format(time.RFC3339)))
 		filters = append(filters, fmt.Sprintf(`timestamp<="%s"`, end.Format(time.RFC3339)))
 	}
-	if lf.logID != "" {
-		switch lf.filterType {
-		case CloudBuildLogFilterType:
-			filters = append(filters, fmt.Sprintf(`resource.labels.build_id="%s"`, lf.logID))
-		case CloudRunLogFilterType:
-			filters = append(filters, fmt.Sprintf(`resource.labels.revision_name="%s"`, lf.logID))
-		}
-	}
 
 	if lf.serviceName != "" {
 		filters = append(filters, fmt.Sprintf(`resource.labels.service_name="%s"`, lf.serviceName))
+	}
+
+	if lf.clusterName != "" {
+		filters = append(filters, fmt.Sprintf(`resource.labels.cluster_name="%s"`, lf.clusterName))
+	}
+
+	if lf.functionName != "" {
+		filters = append(filters, fmt.Sprintf(`resource.labels.function_name="%s"`, lf.functionName))
 	}
 
 	if lf.buildTriggerName != "" {

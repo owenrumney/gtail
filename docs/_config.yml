@@ -145,7 +145,7 @@ callouts:
 
 plugins:
   - jekyll-seo-tag
-
+  - jekyll-remote-theme
 kramdown:
   syntax_highlighter_opts:
     block:

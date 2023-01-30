@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Cloud Build
-nav_order: 3
+nav_order: 20
 has_children: true
 permalink: /cloudbuild
 ---
