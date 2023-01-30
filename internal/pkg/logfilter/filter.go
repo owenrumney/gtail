@@ -106,12 +106,11 @@ func (lf *LogFilter) GetFilterString() string {
 		if lf.logID != "" {
 			filters = append(filters, fmt.Sprintf(`resource.labels.execution_id="%s"`, lf.logID))
 		}
+		if lf.region != "" {
+			filters = append(filters, fmt.Sprintf(`resource.labels.region="%s"`, lf.region))
+		}
 	case K8sClusterLogFilterType:
 		filters = append(filters, `resource.type="k8s_cluster"`, fmt.Sprintf(`resource.labels.project_id="%s"`, lf.projectID))
-	}
-
-	if lf.region != "" {
-		filters = append(filters, fmt.Sprintf(`resource.labels.location="%s"`, lf.region))
 	}
 
 	if lf.historic {
