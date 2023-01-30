@@ -6,14 +6,23 @@ import (
 
 var (
 	projectID        string = os.Getenv("GCP_PROJECT_ID")
-	region           string = "us-central1"
+	region           string = os.Getenv("GCP_REGION")
 	logID            string
 	severities       []string
 	outputFormat     string
 	debug            bool
 	hoursAgo         int = 24
 	buildTriggerName string
+	functionName     string
+	serviceName      string
+	clusterName      string
 	tailDuration     string = "10m"
 	tailTopic        string
-	serviceName      string
 )
+
+func init() {
+	// need to set a default region
+	if region == "" {
+		region = "us-central1"
+	}
+}
