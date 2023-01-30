@@ -34,4 +34,5 @@ gcloud auth application-default login
 - [Cloud Build](https://gtail.app/cloudbuild)
 - [Cloud Functions](https://gtail.app/cloudfunction)
 - [Cloud Run](https://gtail.app/cloudrun)
+- [K8s](https://gtail.app/k8s)
 - [Pub/Sub](https://gtail.app/pubsub)
