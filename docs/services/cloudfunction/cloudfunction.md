@@ -4,6 +4,7 @@ title: Cloud Function
 nav_order: 30
 has_children: true
 permalink: /cloudfunction
+parent: Supported Services
 ---
 
 # Cloud Functions

@@ -4,6 +4,7 @@ title: GKE Cluster
 nav_order: 50
 has_children: true
 permalink: /k8s
+parent: Supported Services
 ---
 
 # GKE Cluster

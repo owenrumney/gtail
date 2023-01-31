@@ -4,6 +4,7 @@ title: Cloud Run
 nav_order: 40
 has_children: true
 permalink: /cloudrun
+parent: Supported Services
 ---
 
 # Cloud Run

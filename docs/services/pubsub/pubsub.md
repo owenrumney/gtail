@@ -4,6 +4,7 @@ title: PubSub
 nav_order: 60
 has_children: true
 permalink: /pubsub
+parent: Supported Services
 ---
 
 # PubSub Topic
