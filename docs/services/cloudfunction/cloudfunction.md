@@ -53,7 +53,7 @@ Use "gtail cloud-function [command] --help" for more information about a command
 
 Passing the `--execution-id` flag will start streaming the logs for that execution or you can use `--function` to specify a service and start streaming the latest from that.
 
-# Historic Cloud Function
+## Historic Cloud Function
 {: .no_toc }
 
 gtail can get historic logs for a Cloud Function that has already completed

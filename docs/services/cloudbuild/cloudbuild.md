@@ -49,7 +49,7 @@ Use "gtail cloud-build [command] --help" for more information about a command.
 
 Passing the `--build-id` flag will start streaming the logs for that build or you can use `--trigger-name` to specify a trigger and start streaming that.
 
-# Historic Cloud Build
+## Historic Cloud Build
 {: .no_toc }
 
 gtail can get historic logs for a Cloud Build that has already completed
