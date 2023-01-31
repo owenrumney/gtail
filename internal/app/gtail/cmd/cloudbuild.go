@@ -38,6 +38,7 @@ var historicCloudBuildCmd = &cobra.Command{
 		lf := logfilter.New(projectID, logfilter.CloudBuildLogFilterType).
 			WithBuildTriggerName(buildTriggerName).
 			WithID(logID).
+			WithLastRun(lastRun).
 			WithHoursAgo(hoursAgo)
 		return la.GetHistoricalLogEntries(lf)
 	},
@@ -52,6 +53,7 @@ func getCloudBuildCommand() *cobra.Command {
 	cloudBuild.PersistentFlags().StringVar(&logID, "build-id", logID, "The cloud build ID")
 	cloudBuild.PersistentFlags().StringSliceVar(&severities, "severity", severities, "The severity of logs to include")
 	cloudBuild.PersistentFlags().StringVarP(&outputFormat, "output", "o", outputFormat, "The output format either json or a template string")
+	historicCloudBuildCmd.Flags().BoolVar(&lastRun, "last-run", lastRun, "Get the logs for the last run of the trigger")
 	historicCloudBuildCmd.Flags().IntVar(&hoursAgo, "hours-ago", hoursAgo, "Roughly how many hours ago the build happened. Searches a window of time from then till now")
 
 	return cloudBuild

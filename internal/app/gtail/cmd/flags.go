@@ -5,19 +5,20 @@ import (
 )
 
 var (
+	debug            bool
+	lastRun          bool
+	hoursAgo         int    = 24
 	projectID        string = os.Getenv("GCP_PROJECT_ID")
 	region           string = os.Getenv("GCP_REGION")
 	logID            string
-	severities       []string
 	outputFormat     string
-	debug            bool
-	hoursAgo         int = 24
 	buildTriggerName string
 	functionName     string
 	serviceName      string
 	clusterName      string
 	tailDuration     string = "10m"
 	tailTopic        string
+	severities       []string
 )
 
 func init() {
