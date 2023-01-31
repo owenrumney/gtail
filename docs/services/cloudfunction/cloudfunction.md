@@ -59,6 +59,9 @@ Passing the `--execution-id` flag will start streaming the logs for that executi
 gtail can get historic logs for a Cloud Function that has already completed
 
 ```bash
+gtail cloud-run historic -h
+```
+```text
 Get the cloud function logs for a run that has already exited
 
 Usage:
