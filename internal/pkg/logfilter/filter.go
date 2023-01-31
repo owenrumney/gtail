@@ -18,10 +18,12 @@ const (
 )
 
 type LogFilter struct {
-	filterType       LogFilterType
+	filterType LogFilterType
+	lastRun    bool
+	historic   bool
+	hoursAgo   int
+
 	projectID        string
-	historic         bool
-	hoursAgo         int
 	logID            string
 	buildTriggerName string
 	functionName     string
@@ -47,6 +49,11 @@ func New(projectID string, filterType LogFilterType) *LogFilter {
 
 func (lf *LogFilter) WithHistoric(historic bool) *LogFilter {
 	lf.historic = historic
+	return lf
+}
+
+func (lf *LogFilter) WithLastRun(lastRun bool) *LogFilter {
+	lf.lastRun = lastRun
 	return lf
 }
 
@@ -113,7 +120,7 @@ func (lf *LogFilter) GetFilterString() string {
 		filters = append(filters, `resource.type="k8s_cluster"`, fmt.Sprintf(`resource.labels.project_id="%s"`, lf.projectID))
 	}
 
-	if lf.historic {
+	if lf.historic && !lf.lastRun {
 		start := time.Now().Add(time.Duration(-lf.hoursAgo) * time.Hour)
 		end := start.Add(time.Duration(lf.hoursAgo) * time.Hour)
 
@@ -139,6 +146,16 @@ func (lf *LogFilter) GetFilterString() string {
 			logger.Error("could not resolve the trigger named %s: %v", lf.buildTriggerName, err)
 		}
 		filters = append(filters, fmt.Sprintf(`resource.labels.build_trigger_id="%s"`, triggerID))
+
+		if lf.lastRun {
+			buildID, createTime, err := getLatestBuildID(lf.projectID, triggerID)
+			if err != nil {
+				logger.Error("could not resolve the build ID for trigger %s: %v", lf.buildTriggerName, err)
+			}
+			filters = append(filters, fmt.Sprintf(`resource.labels.build_id="%s"`, buildID))
+			filters = append(filters, fmt.Sprintf(`timestamp>="%s"`, createTime.Format(time.RFC3339)))
+			filters = append(filters, fmt.Sprintf(`timestamp<="%s"`, createTime.Add(time.Duration(1)*time.Hour).Format(time.RFC3339)))
+		}
 	}
 
 	filterString := strings.Join(filters, " ")
