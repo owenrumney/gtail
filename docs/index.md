@@ -10,5 +10,8 @@ similar to `tail` command but specifically for GCP services.
 At present, the only services that are supported are;
 
 * [Cloud Build](/cloudbuild)
+* [Cloud Function](/cloudfunction)
 * [Cloud Run](/cloudrun)
+* [GKE](/k8s)
 * [Pub/Sub](/pubsub)
+
