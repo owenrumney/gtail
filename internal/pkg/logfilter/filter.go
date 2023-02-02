@@ -147,7 +147,10 @@ func (lf *LogFilter) GetFilterString() string {
 		}
 		filters = append(filters, fmt.Sprintf(`resource.labels.build_trigger_id="%s"`, triggerID))
 
-		if lf.lastRun {
+		if lf.lastRun || lf.logID == "" {
+			if lf.logID == "" {
+				logger.Info("Getting the latest build for trigger %s as no build id was provided", lf.buildTriggerName)
+			}
 			buildID, createTime, err := getLatestBuildID(lf.projectID, triggerID)
 			if err != nil {
 				logger.Error("could not resolve the build ID for trigger %s: %v", lf.buildTriggerName, err)
