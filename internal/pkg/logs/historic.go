@@ -15,7 +15,10 @@ import (
 )
 
 func (la *LogAccess) GetHistoricalLogEntries(logFilter *logfilter.LogFilter) error {
-	filterString := logFilter.GetFilterString()
+	filterString, err := logFilter.GetFilterString()
+	if err != nil {
+		return err
+	}
 
 	adminClient, err := logadmin.NewClient(context.Background(), la.projectID)
 	if err != nil {

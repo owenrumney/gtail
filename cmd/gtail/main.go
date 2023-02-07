@@ -19,7 +19,6 @@ func main() {
 	}()
 
 	if err := rootCmd.Execute(); err != nil {
-		logger.Error("Error executing command: %s", err)
 		os.Exit(1)
 	}
 }

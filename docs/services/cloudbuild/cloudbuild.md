@@ -83,3 +83,29 @@ The `--hours-ago` flag will search for a build that started within the last `n` 
 | Note: starting a historic build with the `--trigger-name` flag will tail all builds for that trigger in the given time period.
 
 The `--last-run` flag will get the logs for the last run of the trigger, it needs to be used with the `--trigger-name` flag. The time it ran will be pulled from the build details so `--hours-ago` will be ignored.
+
+## Latest Cloud Build
+
+This is a convenience command that is the same as running a historic command with the `--last-run` flag.
+
+{: .no_toc }
+```bash
+gtail cloud-build latest -h
+```
+```text
+Get the latest Cloud Build logs for a trigger that has already completed. This is the same as running a historic command with the --last-run flag
+
+Usage:
+gtail cloud-build latest [flags]
+
+Flags:
+-h, --help   help for latest
+
+Global Flags:
+--build-id string       The cloud build ID
+-d, --debug                 Enable debug logging
+-o, --output string         The output format either json or a template string
+-p, --project string        The GCP project ID
+-r, --region string         The GCP region (default "us-central1")
+--severity strings      The severity of logs to include
+--trigger-name string   The name of the cloud build trigger to use

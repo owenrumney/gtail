@@ -44,9 +44,30 @@ var historicCloudBuildCmd = &cobra.Command{
 	},
 }
 
+var latestCloudBuildCmd = &cobra.Command{
+	Use:   "latest",
+	Short: "Get the latest Cloud Build logs for a trigger that has already completed",
+	Long:  "Get the latest Cloud Build logs for a trigger that has already completed. This is the same as running a historic command with the --last-run flag",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		outputWriter := output.New(outputFormat, severities, defaultCloudBuildLogWriter)
+		la := logs.New(projectID, severities, outputWriter)
+
+		if buildTriggerName == "" {
+			return fmt.Errorf("You must specify a trigger name")
+		}
+
+		lf := logfilter.New(projectID, logfilter.CloudBuildLogFilterType).
+			WithBuildTriggerName(buildTriggerName).
+			WithLastRun(true).
+			WithHoursAgo(hoursAgo)
+		return la.GetHistoricalLogEntries(lf)
+	},
+}
+
 func getCloudBuildCommand() *cobra.Command {
 	// add the child commands
 	cloudBuild.AddCommand(historicCloudBuildCmd)
+	cloudBuild.AddCommand(latestCloudBuildCmd)
 
 	// add the flags
 	cloudBuild.PersistentFlags().StringVar(&buildTriggerName, "trigger-name", buildTriggerName, "The name of the cloud build trigger to use")

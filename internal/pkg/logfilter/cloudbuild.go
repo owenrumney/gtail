@@ -7,6 +7,7 @@ import (
 
 	cloudbuild "cloud.google.com/go/cloudbuild/apiv1/v2"
 	"cloud.google.com/go/cloudbuild/apiv1/v2/cloudbuildpb"
+	"github.com/owenrumney/gtail/internal/pkg/auth"
 	"github.com/owenrumney/gtail/pkg/logger"
 )
 
@@ -22,6 +23,7 @@ func resolveBuildTriggerID(projectID, triggerName string) (string, error) {
 		TriggerId: triggerName,
 	})
 	if err != nil {
+		auth.CheckErrorForAuth(err)
 		return "", fmt.Errorf("GetBuildTrigger error: %v", err)
 	}
 	logger.Debug("Resolved trigger ID for %s: %s", trigger, trigger.Id)
@@ -44,6 +46,7 @@ func getLatestBuildID(projectID, triggerID string) (string, *time.Time, error) {
 
 	build, err := builds.Next()
 	if err != nil {
+		auth.CheckErrorForAuth(err)
 		return "", nil, fmt.Errorf("ListBuilds error: %v", err)
 	}
 	createTime := build.GetCreateTime().AsTime()
