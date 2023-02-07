@@ -109,3 +109,4 @@ Global Flags:
 -r, --region string         The GCP region (default "us-central1")
 --severity strings      The severity of logs to include
 --trigger-name string   The name of the cloud build trigger to use
+```
