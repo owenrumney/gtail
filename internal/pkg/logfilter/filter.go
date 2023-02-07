@@ -92,8 +92,8 @@ func (lf *LogFilter) WithRegion(region string) *LogFilter {
 	return lf
 }
 
-func (lf *LogFilter) GetFilterString() string {
-	filters := []string{}
+func (lf *LogFilter) GetFilterString() (string, error) {
+	var filters []string
 
 	switch lf.filterType {
 	case CloudBuildLogFilterType:
@@ -143,7 +143,7 @@ func (lf *LogFilter) GetFilterString() string {
 	if lf.buildTriggerName != "" {
 		triggerID, err := resolveBuildTriggerID(lf.projectID, lf.buildTriggerName)
 		if err != nil {
-			logger.Error("could not resolve the trigger named %s: %v", lf.buildTriggerName, err)
+			return "", fmt.Errorf("could not resolve the trigger named %s, ensure it is correct", lf.buildTriggerName)
 		}
 		filters = append(filters, fmt.Sprintf(`resource.labels.build_trigger_id="%s"`, triggerID))
 
@@ -153,7 +153,7 @@ func (lf *LogFilter) GetFilterString() string {
 			}
 			buildID, createTime, err := getLatestBuildID(lf.projectID, triggerID)
 			if err != nil {
-				logger.Error("could not resolve the build ID for trigger %s: %v", lf.buildTriggerName, err)
+				return "", fmt.Errorf("could not resolve the build ID for trigger %s, ensure it is correct", lf.buildTriggerName)
 			}
 			filters = append(filters, fmt.Sprintf(`resource.labels.build_id="%s"`, buildID))
 			filters = append(filters, fmt.Sprintf(`timestamp>="%s"`, createTime.Format(time.RFC3339)))
@@ -163,5 +163,5 @@ func (lf *LogFilter) GetFilterString() string {
 
 	filterString := strings.Join(filters, " ")
 	logger.Debug("Using filter string [%s]", filterString)
-	return filterString
+	return filterString, nil
 }

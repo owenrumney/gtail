@@ -28,11 +28,16 @@ func (la *LogAccess) StreamLogEntries(logFilter *logfilter.LogFilter) error {
 	}
 	defer func() { _ = stream.CloseSend() }()
 
+	filter, err := logFilter.GetFilterString()
+	if err != nil {
+		return err
+	}
+
 	req := &loggingpb.TailLogEntriesRequest{
 		ResourceNames: []string{
 			fmt.Sprintf("projects/%s", la.projectID),
 		},
-		Filter: logFilter.GetFilterString(),
+		Filter: filter,
 	}
 	if err := stream.Send(req); err != nil {
 		return fmt.Errorf("stream.Send error: %v", err)
