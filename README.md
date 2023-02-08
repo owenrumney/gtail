@@ -1,4 +1,4 @@
-# :page_with_curl: gtail
+# :page_with_curl: gtail  
 
 Tailing for GCP services to make reading logs easier.
 
