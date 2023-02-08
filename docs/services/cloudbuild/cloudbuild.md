@@ -37,7 +37,7 @@ Flags:
   -h, --help                  help for cloud-build
   -o, --output string         The output format either json or a template string
       --severity strings      The severity of logs to include
-      --trigger-name string   The name of the cloud build trigger to use
+  -t, --trigger-name string   The name of the cloud build trigger to use
 
 Global Flags:
   -d, --debug            Enable debug logging
@@ -75,7 +75,7 @@ Global Flags:
   -p, --project string        The GCP project ID (default "gs-app-iac")
   -r, --region string         The GCP region (default "us-central1")
       --severity strings      The severity of logs to include
-      --trigger-name string   The name of the cloud build trigger to use
+  -t, --trigger-name string   The name of the cloud build trigger to use
 ```
 
 The `--hours-ago` flag will search for a build that started within the last `n` hours. If you don't specify this flag it will search for a build that started within the last 24 hours.
@@ -102,11 +102,11 @@ Flags:
 -h, --help   help for latest
 
 Global Flags:
---build-id string       The cloud build ID
--d, --debug                 Enable debug logging
--o, --output string         The output format either json or a template string
--p, --project string        The GCP project ID
--r, --region string         The GCP region (default "us-central1")
---severity strings      The severity of logs to include
---trigger-name string   The name of the cloud build trigger to use
+      --build-id string       The cloud build ID
+  -d, --debug                 Enable debug logging
+  -o, --output string         The output format either json or a template string
+  -p, --project string        The GCP project ID
+  -r, --region string         The GCP region (default "us-central1")
+      --severity strings      The severity of logs to include
+  -t, --trigger-name string   The name of the cloud build trigger to use
 ```
