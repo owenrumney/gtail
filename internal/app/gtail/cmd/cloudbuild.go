@@ -70,7 +70,7 @@ func getCloudBuildCommand() *cobra.Command {
 	cloudBuild.AddCommand(latestCloudBuildCmd)
 
 	// add the flags
-	cloudBuild.PersistentFlags().StringVar(&buildTriggerName, "trigger-name", buildTriggerName, "The name of the cloud build trigger to use")
+	cloudBuild.PersistentFlags().StringVarP(&buildTriggerName, "trigger-name", "t", buildTriggerName, "The name of the cloud build trigger to use")
 	cloudBuild.PersistentFlags().StringVar(&logID, "build-id", logID, "The cloud build ID")
 	cloudBuild.PersistentFlags().StringSliceVar(&severities, "severity", severities, "The severity of logs to include")
 	cloudBuild.PersistentFlags().StringVarP(&outputFormat, "output", "o", outputFormat, "The output format either json or a template string")
