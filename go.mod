@@ -1,6 +1,6 @@
 module github.com/owenrumney/gtail
 
-go 1.19
+go 1.26.10
 
 require (
 	cloud.google.com/go/cloudbuild v1.9.0
